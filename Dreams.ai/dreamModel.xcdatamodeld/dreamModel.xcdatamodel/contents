@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23E214" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="DreamEntryEntity" representedClassName="DreamEntryEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="dreamDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dreamInput" optional="YES" attributeType="String"/>
+        <attribute name="dreamInterpretation" optional="YES" attributeType="String"/>
+        <relationship name="userRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserDataEntity" inverseName="dreamEntries" inverseEntity="UserDataEntity"/>
+    </entity>
+    <entity name="UserDataEntity" representedClassName="UserDataEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="joinedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastActive" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="dreamEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DreamEntryEntity" inverseName="userRelation" inverseEntity="DreamEntryEntity"/>
+    </entity>
+</model>
