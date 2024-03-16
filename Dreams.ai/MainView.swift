@@ -128,7 +128,7 @@ struct MainView: View {
                                         successRequestCount += 1
                                         
                                         // save dream entry
-                                        CoreDataManager.shared.addDreamEntry(dreamInput: dreamText, dreamInterpretation: responseText, date: currentDate, userEmail: "user@example.com") { success, error in
+                                        CoreDataManager.shared.addDreamEntry(dreamInput: dreamText, dreamInterpretation: responseText, date: currentDate, userEmail: "mathias.randryyt@gmail.com") { success, error in
                                             if success {
                                                 print("Dream entry saved successfully!")
                                             } else if let error = error {

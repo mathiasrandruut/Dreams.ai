@@ -116,8 +116,11 @@ struct RegistrationView: View {
                     Spacer() // Push everything to the top
                 }
                 .padding(.horizontal)
+                // Replace "" with EmptyView() or any other view you prefer
                 .background(
-                    NavigationLink("", destination: MainView(), isActive: $isNavigatingToMainView)
+                    NavigationLink(destination: MainView(), isActive: $isNavigatingToMainView) {
+                        EmptyView()
+                    }
                 )
             }
         }

@@ -197,6 +197,7 @@
 				C770F8022AA8A2D300A1A47A /* Dreams_aiApp.swift */,
 				C7C68A742AAD14D400EB1286 /* AppDelegate.swift */,
 				C770F8042AA8A2D300A1A47A /* RegistrationView.swift */,
+				C7B0F4552BA65C0800FAEB19 /* SessionManager.swift */,
 				C752CCA92ADDDC2500730154 /* QuizView.swift */,
 				C752CCA72ADDC63500730154 /* OpeningView.swift */,
 				C7705F512AA9FCBF003D73A4 /* MainView.swift */,
@@ -216,7 +217,6 @@
 				C770F8122AA8A2D400A1A47A /* Dreams.aiTests */,
 				C770F8082AA8A2D400A1A47A /* Preview Content */,
 				C7B0F4382BA64B3F00FAEB19 /* dreamModel.xcdatamodeld */,
-				C7B0F4552BA65C0800FAEB19 /* SessionManager.swift */,
 			);
 			path = Dreams.ai;
 			sourceTree = "<group>";

@@ -8,7 +8,7 @@ class CoreDataManager {
     let persistentContainer: NSPersistentContainer
 
     init() {
-        persistentContainer = NSPersistentContainer(name: "Dreams")
+        persistentContainer = NSPersistentContainer(name: "dreamModel")
         persistentContainer.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
