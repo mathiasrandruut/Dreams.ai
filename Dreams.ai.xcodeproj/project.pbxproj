@@ -37,7 +37,6 @@
 		C752CCA82ADDC63500730154 /* OpeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C752CCA72ADDC63500730154 /* OpeningView.swift */; };
 		C752CCAA2ADDDC2500730154 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C752CCA92ADDDC2500730154 /* QuizView.swift */; };
 		C752CCAC2ADDE10D00730154 /* QuizView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C752CCAB2ADDE10D00730154 /* QuizView2.swift */; };
-		C7705F4C2AA9E97D003D73A4 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7705F4B2AA9E97D003D73A4 /* SignUpViewModel.swift */; };
 		C7705F502AA9F639003D73A4 /* back.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7705F4F2AA9F639003D73A4 /* back.jpg */; };
 		C7705F522AA9FCBF003D73A4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7705F512AA9FCBF003D73A4 /* MainView.swift */; };
 		C770F8032AA8A2D300A1A47A /* Dreams_aiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C770F8022AA8A2D300A1A47A /* Dreams_aiApp.swift */; };
@@ -50,7 +49,6 @@
 		C77AC60A2AAB300700586888 /* dream.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C77AC6092AAB300700586888 /* dream.jpg */; };
 		C77AC60E2AAB844C00586888 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC60D2AAB844C00586888 /* UserView.swift */; };
 		C77AC6102AAB866600586888 /* user.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C77AC60F2AAB866600586888 /* user.jpg */; };
-		C77AC6122AAB8E3400586888 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC6112AAB8E3400586888 /* SignInViewModel.swift */; };
 		C77AC6142AABA4C700586888 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC6132AABA4C700586888 /* CalendarView.swift */; };
 		C77AC61B2AABC26400586888 /* OpenAIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC61A2AABC26400586888 /* OpenAIResponseHandler.swift */; };
 		C77AC61E2AABC2A500586888 /* OpenAIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC61D2AABC2A500586888 /* OpenAIConnector.swift */; };
@@ -58,6 +56,8 @@
 		C7B0F43A2BA64B3F00FAEB19 /* dreamModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4382BA64B3F00FAEB19 /* dreamModel.xcdatamodeld */; };
 		C7B0F4442BA64FB600FAEB19 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4432BA64FB600FAEB19 /* CoreDataManager.swift */; };
 		C7B0F4562BA65C0800FAEB19 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4552BA65C0800FAEB19 /* SessionManager.swift */; };
+		C7B0F4582BA666F700FAEB19 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4572BA666F700FAEB19 /* AuthenticationViewModel.swift */; };
+		C7B0F45A2BA674E800FAEB19 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4592BA674E800FAEB19 /* CalendarViewModel.swift */; };
 		C7C68A712AAD124900EB1286 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7C68A702AAD124900EB1286 /* GoogleService-Info.plist */; };
 		C7C68A722AAD124900EB1286 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7C68A702AAD124900EB1286 /* GoogleService-Info.plist */; };
 		C7C68A732AAD124900EB1286 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7C68A702AAD124900EB1286 /* GoogleService-Info.plist */; };
@@ -90,7 +90,6 @@
 		C752CCA72ADDC63500730154 /* OpeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningView.swift; sourceTree = "<group>"; };
 		C752CCA92ADDDC2500730154 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		C752CCAB2ADDE10D00730154 /* QuizView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView2.swift; sourceTree = "<group>"; };
-		C7705F4B2AA9E97D003D73A4 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		C7705F4F2AA9F639003D73A4 /* back.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = back.jpg; path = ../../../back.jpg; sourceTree = "<group>"; };
 		C7705F512AA9FCBF003D73A4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C770F7FF2AA8A2D300A1A47A /* Dreams.ai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreams.ai.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,13 +105,14 @@
 		C77AC6092AAB300700586888 /* dream.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = dream.jpg; path = ../../../dream.jpg; sourceTree = "<group>"; };
 		C77AC60D2AAB844C00586888 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		C77AC60F2AAB866600586888 /* user.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = user.jpg; path = ../../../../Pictures/user.jpg; sourceTree = "<group>"; };
-		C77AC6112AAB8E3400586888 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		C77AC6132AABA4C700586888 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		C77AC61A2AABC26400586888 /* OpenAIResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIResponseHandler.swift; sourceTree = "<group>"; };
 		C77AC61D2AABC2A500586888 /* OpenAIConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIConnector.swift; sourceTree = "<group>"; };
 		C7B0F4392BA64B3F00FAEB19 /* dreamModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dreamModel.xcdatamodel; sourceTree = "<group>"; };
 		C7B0F4432BA64FB600FAEB19 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C7B0F4552BA65C0800FAEB19 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		C7B0F4572BA666F700FAEB19 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		C7B0F4592BA674E800FAEB19 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		C7C68A702AAD124900EB1286 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C7C68A742AAD14D400EB1286 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,15 +196,15 @@
 				C752CCAB2ADDE10D00730154 /* QuizView2.swift */,
 				C770F8022AA8A2D300A1A47A /* Dreams_aiApp.swift */,
 				C7C68A742AAD14D400EB1286 /* AppDelegate.swift */,
+				C7B0F4572BA666F700FAEB19 /* AuthenticationViewModel.swift */,
 				C770F8042AA8A2D300A1A47A /* RegistrationView.swift */,
 				C7B0F4552BA65C0800FAEB19 /* SessionManager.swift */,
 				C752CCA92ADDDC2500730154 /* QuizView.swift */,
 				C752CCA72ADDC63500730154 /* OpeningView.swift */,
 				C7705F512AA9FCBF003D73A4 /* MainView.swift */,
 				C77AC6132AABA4C700586888 /* CalendarView.swift */,
+				C7B0F4592BA674E800FAEB19 /* CalendarViewModel.swift */,
 				C77AC60D2AAB844C00586888 /* UserView.swift */,
-				C7705F4B2AA9E97D003D73A4 /* SignUpViewModel.swift */,
-				C77AC6112AAB8E3400586888 /* SignInViewModel.swift */,
 				C7B0F4432BA64FB600FAEB19 /* CoreDataManager.swift */,
 				C7705F4F2AA9F639003D73A4 /* back.jpg */,
 				C77AC60F2AAB866600586888 /* user.jpg */,
@@ -419,15 +419,15 @@
 			files = (
 				C7B0F4442BA64FB600FAEB19 /* CoreDataManager.swift in Sources */,
 				C770F8052AA8A2D300A1A47A /* RegistrationView.swift in Sources */,
+				C7B0F4582BA666F700FAEB19 /* AuthenticationViewModel.swift in Sources */,
 				C77AC6142AABA4C700586888 /* CalendarView.swift in Sources */,
 				C752CCA82ADDC63500730154 /* OpeningView.swift in Sources */,
 				C7705F522AA9FCBF003D73A4 /* MainView.swift in Sources */,
-				C77AC6122AAB8E3400586888 /* SignInViewModel.swift in Sources */,
 				C7B0F43A2BA64B3F00FAEB19 /* dreamModel.xcdatamodeld in Sources */,
 				C752CCAA2ADDDC2500730154 /* QuizView.swift in Sources */,
+				C7B0F45A2BA674E800FAEB19 /* CalendarViewModel.swift in Sources */,
 				C752CCAC2ADDE10D00730154 /* QuizView2.swift in Sources */,
 				C77AC60E2AAB844C00586888 /* UserView.swift in Sources */,
-				C7705F4C2AA9E97D003D73A4 /* SignUpViewModel.swift in Sources */,
 				C77AC61E2AABC2A500586888 /* OpenAIConnector.swift in Sources */,
 				C770F8032AA8A2D300A1A47A /* Dreams_aiApp.swift in Sources */,
 				C7C68A752AAD14D400EB1286 /* AppDelegate.swift in Sources */,

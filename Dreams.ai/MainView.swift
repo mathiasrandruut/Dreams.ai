@@ -91,10 +91,9 @@ struct MainView: View {
                     TextField("Three monkeys slept on my couch...", text: $dreamText, axis: .vertical)
                         .lineLimit(6, reservesSpace: true)
                         .font(.title3)
-                        .opacity(0.8)
+                        .opacity(1)
                         .padding(10)
-                        .background(Color.black)
-                        .foregroundColor(.white)
+                        .background(Color.white)
                         .cornerRadius(20)
                         .padding(.horizontal, 35)
 
@@ -128,7 +127,7 @@ struct MainView: View {
                                         successRequestCount += 1
                                         
                                         // save dream entry
-                                        CoreDataManager.shared.addDreamEntry(dreamInput: dreamText, dreamInterpretation: responseText, date: currentDate, userEmail: "mathias.randryyt@gmail.com") { success, error in
+                                        CoreDataManager.shared.addDreamEntry(dreamInput: dreamText, dreamInterpretation: responseText, date: currentDate, userEmail: "info@mathiasrandruut.com") { success, error in
                                             if success {
                                                 print("Dream entry saved successfully!")
                                             } else if let error = error {
@@ -167,6 +166,7 @@ struct MainView: View {
                                 .cornerRadius(40)
                         }
                         .padding(.horizontal, 40)
+                        .padding(.vertical, 25)
                         .padding(.vertical, 25)
                     }
 

@@ -1,28 +1,34 @@
-//
-//  Dreams_aiApp.swift
-//  Dreams.ai
-//
-//  Created by Mathias Randrüüt on 06.09.2023.
-//
-
 import SwiftUI
 import Firebase
 
 @main
 struct Dreams_aiApp: App {
+    // Initialize Firebase
+    init() {
+        FirebaseApp.configure()
+    }
+    
     // Create an object for the OPENAI connection
     @StateObject private var openAIConnector = OpenAIConnector()
-    
-    // Register app delegate for Firebase setup
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var sessionManager = SessionManager.shared // Use SessionManager as a state object
     
     let coreDataManager = CoreDataManager.shared
     
     var body: some Scene {
         WindowGroup {
-            OpeningView()
-                .environmentObject(openAIConnector) // Pass OpenAIConnector as an environment object
-                .environment(\.managedObjectContext, coreDataManager.persistentContainer.viewContext) // Pass managed object context
+            // Determine which view to show based on the authentication state
+            if sessionManager.isLoggedIn {
+                // User is signed in, show MainView
+                MainView()
+                    .environmentObject(openAIConnector) // Pass OpenAIConnector as an environment object
+                    .environment(\.managedObjectContext, coreDataManager.persistentContainer.viewContext) // Pass managed object context
+            } else {
+                // User is not signed in, show OpeningView
+                OpeningView()
+                    .environmentObject(openAIConnector) // Pass OpenAIConnector as an environment object
+                    .environment(\.managedObjectContext, coreDataManager.persistentContainer.viewContext) // Pass managed object context
+            }
         }
     }
 }
+

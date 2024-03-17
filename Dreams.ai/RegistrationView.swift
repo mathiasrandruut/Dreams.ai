@@ -5,25 +5,19 @@ struct RegistrationView: View {
     @Binding var name: String
     @State private var email = ""
     @State private var password = ""
-    @State private var username = ""
     
-    // ViewModels for sign-up and sign-in
-    @ObservedObject var signupViewModel = SignupViewModel()
-    @ObservedObject var signInViewModel = SignInViewModel()
+    // ViewModel for authentication
+    @ObservedObject var authViewModel = AuthenticationViewModel()
     
-    // Binding to show a confirmation message
-    @State private var showConfirmation = false
-    
-    // Binding to navigate to MainView
+    // State to control the navigation and message displays
+    @State private var showConfirmationMessage = false
     @State private var isNavigatingToMainView = false
-    
-    // Binding to control the error message display
-    @State private var showError = false
+    @State private var showErrorMessage = false
+    @State private var isLoading = false // Loading state
 
     var body: some View {
         NavigationView {
             ZStack {
-                // Background image
                 Image(uiImage: UIImage(named: "back.jpg") ?? UIImage())
                     .resizable()
                     .scaledToFill()
@@ -31,10 +25,9 @@ struct RegistrationView: View {
                     .offset(x: -20, y: 0)
                 
                 VStack {
-                    Spacer() // Push everything to the top
+                    Spacer()
                     
-                    // Title
-                    Text("Ok, \(name). Last small step before we can unlock your dreams. Enter your email and create a password.")
+                    Text("Ok, \(name). Enter your email and a password.")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -42,7 +35,6 @@ struct RegistrationView: View {
                         .padding(.bottom, 20)
                         .padding(.horizontal, 20)
                     
-                    // Email input field
                     TextField("Email", text: $email)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
@@ -51,7 +43,6 @@ struct RegistrationView: View {
                         .textContentType(.emailAddress)
                         .padding(.vertical, 10)
                     
-                    // Password input field
                     SecureField("Password", text: $password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
@@ -59,53 +50,60 @@ struct RegistrationView: View {
                         .padding(.vertical, 10)
                         .cornerRadius(40)
                     
-                    // Continue/Sign Up button
                     Button(action: {
-                        // Attempt to sign up
-                        signupViewModel.signUp(email: email, password: password) { success in
+                        isLoading = true // Set loading state to true
+                        
+                        authViewModel.signUp(email: email, password: password) { success in
+                            isLoading = false // Set loading state to false after sign-up attempt
+                            
                             if success {
-                                showConfirmation = true
-                                showError = false // Reset the error state
+                                showConfirmationMessage = true
+                                showErrorMessage = false
                             } else {
-                                // Call the signIn method on signInViewModel instance
-                                signInViewModel.signIn(email: email, password: password) { signInSuccess in
-                                    // Check if the sign-in was successful before navigating
+                                authViewModel.signIn(email: email, password: password) { signInSuccess in
+                                    isLoading = false // Set loading state to false after sign-in attempt
+                                    
                                     if signInSuccess {
                                         isNavigatingToMainView = true
-                                        showError = false // Reset the error state
+                                        showErrorMessage = false
                                     } else {
-                                        // Unsuccessful login
-                                        showConfirmation = false // Hide the confirmation message
-                                        showError = true // Set the error state to display the message
+                                        showConfirmationMessage = false
+                                        showErrorMessage = true
                                     }
                                 }
                             }
                         }
                     }) {
-                        Text("Continue")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.accentColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(40)
+                        if isLoading {
+                            // Show loading indicator
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .foregroundColor(.white)
+                                .padding()
+                        } else {
+                            // Show Continue button
+                            Text("Continue")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.accentColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(40)
+                        }
                     }
                     .padding(.horizontal)
                     
-                    // Wrap error and confirmation messages in VStack
                     VStack {
-                        // Show a message based on the registration status
-                        if showConfirmation {
+                        if showConfirmationMessage {
                             Text("Registration Successful! Please confirm your email.")
                                 .foregroundColor(.green)
                                 .padding(.top, 10)
                                 .multilineTextAlignment(.center)
                         }
                         
-                        // Display the error message if there is one
-                        if showError {
-                            Text(signupViewModel.errorMessage ?? "Email or password is incorrect")
+                        if showErrorMessage {
+                            Text(authViewModel.errorMessage ?? "Email or password is incorrect")
                                 .foregroundColor(.red)
                                 .padding()
                                 .bold()
@@ -113,10 +111,9 @@ struct RegistrationView: View {
                         }
                     }
                     
-                    Spacer() // Push everything to the top
+                    Spacer()
                 }
                 .padding(.horizontal)
-                // Replace "" with EmptyView() or any other view you prefer
                 .background(
                     NavigationLink(destination: MainView(), isActive: $isNavigatingToMainView) {
                         EmptyView()

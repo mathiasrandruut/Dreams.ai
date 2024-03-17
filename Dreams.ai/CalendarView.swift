@@ -1,78 +1,96 @@
 import SwiftUI
 
-
 struct CalendarView: View {
     @State private var selectedDate: Date?
     @State private var currentMonth = Date()
+    @ObservedObject private var viewModel: CalendarViewModel
+
+    init() {
+        let sessionManager = SessionManager.shared
+        _viewModel = ObservedObject(wrappedValue: CalendarViewModel(coreDataManager: CoreDataManager.shared, sessionManager: sessionManager))
+    }
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Image(uiImage: UIImage(named: "dream.jpg") ?? UIImage())
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    HStack {
-                        Spacer()
-                        NavigationLink(destination: MainView()) {
-                            Image(systemName: "house.circle")
-                                .font(.title)
-                                .foregroundColor(.white)
-                        }
-                        .padding()
+        ZStack {
+            Image(uiImage: UIImage(named: "dream.jpg") ?? UIImage())
+                .resizable()
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: MainView()) {
+                        Image(systemName: "house.circle")
+                            .font(.title)
+                            .foregroundColor(.white)
                     }
-                    .offset(x: -15, y: 0)
-                    
-                    Text("Your dream journal")
+                    .padding()
+                }
+                .offset(x: -15, y: 0)
+                
+                Text("Your dream journal")
+                    .font(.title)
+                    .bold()
+                    .padding()
+                    .foregroundColor(.white)
+
+                HStack {
+                    Button(action: {
+                        currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                        selectedDate = nil // Clear the selected date when switching months
+                    }) {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                    }
+                    .padding(.leading)
+
+                    Text("\(currentMonth, formatter: DateFormatter.monthYear)")
                         .font(.title)
-                        .bold()
-                        .padding()
                         .foregroundColor(.white)
 
-                    HStack {
+                    if !Calendar.current.isDate(currentMonth, inSameDayAs: Date()) {
                         Button(action: {
-                            currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                            currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
                             selectedDate = nil // Clear the selected date when switching months
                         }) {
-                            Image(systemName: "arrow.left.circle.fill")
+                            Image(systemName: "arrow.right.circle.fill")
                                 .font(.largeTitle)
                                 .foregroundColor(.white)
                         }
-                        .padding(.leading)
-
-                        Text("\(currentMonth, formatter: DateFormatter.monthYear)")
-                            .font(.title)
-                            .foregroundColor(.white)
-
-                        if !Calendar.current.isDate(currentMonth, inSameDayAs: Date()) {
-                            Button(action: {
-                                currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
-                                selectedDate = nil // Clear the selected date when switching months
-                            }) {
-                                Image(systemName: "arrow.right.circle.fill")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.white)
-                            }
-                            .padding(.trailing)
-                        }
-                    }
-
-                    ScrollView {
-                        CalendarGridView(selectedDate: $selectedDate, currentMonth: $currentMonth)
-                    }
-                    .padding(30) // Add padding to the ScrollView
-
-                    if let selectedDate = selectedDate {
-                        Text("Selected Date: \(selectedDate, formatter: DateFormatter.date)")
-                            .font(.headline)
-                            .padding()
-                            .foregroundColor(.white)
+                        .padding(.trailing)
                     }
                 }
+
+                ScrollView {
+                    CalendarGridView(selectedDate: $selectedDate, currentMonth: $currentMonth)
+                }
+                .padding(30) // Add padding to the ScrollView
+
+                if let selectedDate = selectedDate {
+                    List(viewModel.dreamEntries, id: \.self) { entry in
+                        VStack(alignment: .leading) {
+                            Text("Date:")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                            Text("\(selectedDate, formatter: DateFormatter.date)")
+                            
+                            Text("I dreamed about:")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                            Text(entry.dreamInput ?? "No dream input")
+                            
+                            Text("Interpretation:")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                            Text(entry.dreamInterpretation ?? "No interpretation")
+                            
+                        }
+                    }
+                }
+
             }
         }
-    .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -112,6 +130,7 @@ struct CalendarCell: View {
                 selectedDate = Calendar.current.date(bySetting: .day, value: day, of: currentSelectedDate)
             } else {
                 selectedDate = Calendar.current.date(bySetting: .day, value: day, of: selectedDate ?? Date())
+                
             }
         }) {
             Text("\(day)")
@@ -143,3 +162,4 @@ struct CalendarView_Previews: PreviewProvider {
         CalendarView()
     }
 }
+
