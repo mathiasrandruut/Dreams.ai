@@ -52,6 +52,7 @@
 		C77AC6142AABA4C700586888 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC6132AABA4C700586888 /* CalendarView.swift */; };
 		C77AC61B2AABC26400586888 /* OpenAIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC61A2AABC26400586888 /* OpenAIResponseHandler.swift */; };
 		C77AC61E2AABC2A500586888 /* OpenAIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AC61D2AABC2A500586888 /* OpenAIConnector.swift */; };
+		C783AB932BA70C5B008A7D82 /* DreamDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C783AB922BA70C5B008A7D82 /* DreamDetailsView.swift */; };
 		C7A0F90D2BA6187600C94BD5 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C7A0F90C2BA6187600C94BD5 /* HorizonCalendar */; };
 		C7B0F43A2BA64B3F00FAEB19 /* dreamModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4382BA64B3F00FAEB19 /* dreamModel.xcdatamodeld */; };
 		C7B0F4442BA64FB600FAEB19 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0F4432BA64FB600FAEB19 /* CoreDataManager.swift */; };
@@ -108,6 +109,7 @@
 		C77AC6132AABA4C700586888 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		C77AC61A2AABC26400586888 /* OpenAIResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIResponseHandler.swift; sourceTree = "<group>"; };
 		C77AC61D2AABC2A500586888 /* OpenAIConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIConnector.swift; sourceTree = "<group>"; };
+		C783AB922BA70C5B008A7D82 /* DreamDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamDetailsView.swift; sourceTree = "<group>"; };
 		C7B0F4392BA64B3F00FAEB19 /* dreamModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dreamModel.xcdatamodel; sourceTree = "<group>"; };
 		C7B0F4432BA64FB600FAEB19 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C7B0F4552BA65C0800FAEB19 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				C752CCA92ADDDC2500730154 /* QuizView.swift */,
 				C752CCA72ADDC63500730154 /* OpeningView.swift */,
 				C7705F512AA9FCBF003D73A4 /* MainView.swift */,
+				C783AB922BA70C5B008A7D82 /* DreamDetailsView.swift */,
 				C77AC6132AABA4C700586888 /* CalendarView.swift */,
 				C7B0F4592BA674E800FAEB19 /* CalendarViewModel.swift */,
 				C77AC60D2AAB844C00586888 /* UserView.swift */,
@@ -424,6 +427,7 @@
 				C752CCA82ADDC63500730154 /* OpeningView.swift in Sources */,
 				C7705F522AA9FCBF003D73A4 /* MainView.swift in Sources */,
 				C7B0F43A2BA64B3F00FAEB19 /* dreamModel.xcdatamodeld in Sources */,
+				C783AB932BA70C5B008A7D82 /* DreamDetailsView.swift in Sources */,
 				C752CCAA2ADDDC2500730154 /* QuizView.swift in Sources */,
 				C7B0F45A2BA674E800FAEB19 /* CalendarViewModel.swift in Sources */,
 				C752CCAC2ADDE10D00730154 /* QuizView2.swift in Sources */,
