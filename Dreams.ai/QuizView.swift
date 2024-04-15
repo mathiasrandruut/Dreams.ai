@@ -21,12 +21,14 @@ struct QuizView: View {
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
+                    .foregroundColor(.white)
                 
                 // Ask a question
                 Text("Do you overthink a lot in life?")
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
+                    .foregroundColor(.white)
                 
                 // Rating scale
                 HStack {

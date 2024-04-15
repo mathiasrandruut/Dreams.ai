@@ -18,10 +18,13 @@ struct Dreams_aiApp: App {
         WindowGroup {
             // Determine which view to show based on the authentication state
             if sessionManager.isLoggedIn {
-                // User is signed in, show MainView
-                MainView()
+                OpeningView()
                     .environmentObject(openAIConnector) // Pass OpenAIConnector as an environment object
                     .environment(\.managedObjectContext, coreDataManager.persistentContainer.viewContext) // Pass managed object context
+                // User is signed in, show MainView
+                // MainView()
+                //    .environmentObject(openAIConnector) // Pass OpenAIConnector as an environment object
+                //    .environment(\.managedObjectContext, coreDataManager.persistentContainer.viewContext) // Pass managed object context
             } else {
                 // User is not signed in, show OpeningView
                 OpeningView()

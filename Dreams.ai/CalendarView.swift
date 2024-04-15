@@ -3,13 +3,12 @@ import SwiftUI
 struct CalendarView: View {
     @State private var selectedDate: Date?
     @State private var currentMonth = Date()
-    @ObservedObject private var viewModel: CalendarViewModel
+    @ObservedObject private var viewModel: DreamEntriesViewModel
     @State private var showingDreamDetails = false
-    @State private var selectedDreamEntry: DreamEntryEntity?
+    @State private var selectedDreamEntries: [DreamEntryEntity] = []
 
     init() {
-        let sessionManager = SessionManager.shared
-        _viewModel = ObservedObject(wrappedValue: CalendarViewModel(coreDataManager: CoreDataManager.shared, sessionManager: sessionManager))
+        _viewModel = ObservedObject(wrappedValue: DreamEntriesViewModel(coreDataManager: CoreDataManager.shared, sessionManager: SessionManager.shared))
     }
 
     var body: some View {
@@ -18,6 +17,8 @@ struct CalendarView: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
+                .blur(radius: showingDreamDetails ? 20 : 0)
+
             VStack {
                 HStack {
                     Spacer()
@@ -29,76 +30,107 @@ struct CalendarView: View {
                     .padding()
                 }
                 .offset(x: -15, y: 0)
-                
+
                 Text("Your dream journal")
                     .font(.title)
                     .bold()
                     .padding()
                     .foregroundColor(.white)
 
-                HStack {
-                    Button(action: {
-                        currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
-                        viewModel.fetchDreamEntries(for: currentMonth) // Fetch entries for the new month
-                    }) {
-                        Image(systemName: "arrow.left.circle.fill")
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.leading)
-
-                    Text(currentMonth, formatter: DateFormatter.monthYear)
-                        .font(.title)
-                        .foregroundColor(.white)
-
-                    Button(action: {
-                        currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
-                        viewModel.fetchDreamEntries(for: currentMonth) // Fetch entries for the new month
-                    }) {
-                        Image(systemName: "arrow.right.circle.fill")
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.trailing)
-                }
+                monthNavigation
 
                 ScrollView {
-                    CalendarGridView(selectedDate: $selectedDate, currentMonth: $currentMonth, dreamEntries: viewModel.dreamEntries)
-
+                    CalendarGridView(selectedDate: $selectedDate, currentMonth: $currentMonth, dreamEntries: selectedDreamEntries)
                 }
                 .padding(30)
+            }
 
-                if let selectedDate = selectedDate,
-                let dreamEntry = viewModel.dreamEntries.first(where: { Calendar.current.isDate($0.dreamDate ?? Date(), inSameDayAs: selectedDate) }) {
-                Button("Show Dream Details") {
-                    self.selectedDreamEntry = dreamEntry
-                    self.showingDreamDetails = true
-                }
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.blue)
-                .cornerRadius(10)
+            if showingDreamDetails {
+                DreamDetailsView(viewModel: viewModel, isShowing: $showingDreamDetails)
+                    .animation(.easeInOut)
+                    .transition(.move(edge: .bottom))
             }
         }
-        .blur(radius: showingDreamDetails ? 20 : 0)
-
-        if showingDreamDetails, let selectedDreamEntry = selectedDreamEntry {
-            DreamDetailsView(dreamEntry: selectedDreamEntry, isShowing: $showingDreamDetails)
-                .animation(.easeInOut)
-                .transition(.move(edge: .bottom))
+        .onChange(of: showingDreamDetails) { _ in
+            if !showingDreamDetails {
+                selectedDate = nil
+                selectedDreamEntries = []
+            }
+        }
+        .onChange(of: selectedDate) { _ in
+            processDateChange()
+        }
+        .onAppear {
+            fetchDreamEntriesForCurrentMonth()
         }
     }
-    .onChange(of: selectedDate) { newDate in
-        guard let newDate = newDate else { return }
-        viewModel.fetchDreamEntries(for: newDate) // Refetch entries for the selected date
+
+    private func fetchDreamEntriesForCurrentMonth() {
+        if let userEmail = SessionManager.shared.userEmail {
+            viewModel.fetchDreamEntries(forUserEmail: userEmail, byDate: currentMonth)
+        }
     }
+
+    private func processDateChange() {
+        guard let newDate = selectedDate else {
+            showingDreamDetails = false
+            selectedDreamEntries = []
+            return
+        }
+
+        selectedDreamEntries = viewModel.dreamEntries.filter { entry in
+            guard let entryDate = entry.dreamDate else { return false }
+            return Calendar.current.isDate(entryDate, inSameDayAs: newDate)
+        }
+
+        showingDreamDetails = !selectedDreamEntries.isEmpty
+    }
+
+    private var monthNavigation: some View {
+        HStack {
+            Button(action: {
+                currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                fetchDreamEntriesForCurrentMonth()
+            }) {
+                Image(systemName: "arrow.left.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+            }
+            .padding(.leading)
+
+            Text(currentMonth, formatter: DateFormatter.monthYear)
+                .font(.title2)
+                .foregroundColor(.white)
+
+            if !currentMonth.isStartOfMonth() { // Check if the currentMonth is not the start of the current month
+                Button(action: {
+                    currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
+                    fetchDreamEntriesForCurrentMonth()
+                }) {
+                    Image(systemName: "arrow.right.circle.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                }
+                .padding(.trailing)
+                .disabled(currentMonth.isDateInFuture())
+            }
+        }
     }
 }
+
+// Extension to check if a date is in the future
+extension Date {
+    func isDateInFuture() -> Bool {
+        return self > Date()
+    }
+}
+
 
 struct CalendarGridView: View {
     @Binding var selectedDate: Date?
     @Binding var currentMonth: Date
     var dreamEntries: [DreamEntryEntity] // Add dreamEntries to CalendarGridView
+    
 
     var body: some View {
         let calendar = Calendar.current
@@ -146,20 +178,18 @@ struct CalendarCell: View {
                                                                         month: Calendar.current.component(.month, from: currentMonth),
                                                                         day: day)) {
                 selectedDate = newDate
+                print("Selected day: \(day)") // Print the selected day
             }
         }) {
             Text("\(day)")
-                .font(hasEntry ? .headline.weight(.bold) : .headline) // Apply bold font if there's an entry
+                .font(hasEntry ? .headline.weight(.bold) : .headline)
                 .foregroundColor(isSelected ? .black : .white)
                 .frame(width: 40, height: 40)
-                .background(isSelected ? Color.white : Color.black)
+                .background(isSelected ? Color.white : Color.black.opacity(0.7))
                 .cornerRadius(20)
         }
     }
 }
-
-
-
 
 
 
@@ -183,6 +213,14 @@ extension DateFormatter {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarView()
+    }
+}
+
+extension Date {
+    func isStartOfMonth() -> Bool {
+        let calendar = Calendar.current
+        let startOfCurrentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))!
+        return calendar.isDate(self, equalTo: startOfCurrentMonth, toGranularity: .month)
     }
 }
 

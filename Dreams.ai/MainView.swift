@@ -19,6 +19,7 @@ struct MainView: View {
     @State private var responseText = "" // Store the response text
     @State private var isResponseVisible = false // Control the visibility of the response
     @State private var isButtonEnabled = true
+    @State private var showingDatePicker = false
     
     // Inject the managed object context into the view
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -183,7 +184,9 @@ struct MainView: View {
                         .padding(.horizontal, 35)
                     }
                 }
+                .navigationBarBackButtonHidden(true)
             }
+            .navigationBarBackButtonHidden(true)
         }
         .navigationBarBackButtonHidden(true)
     }

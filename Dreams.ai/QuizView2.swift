@@ -21,12 +21,14 @@ struct QuizView2: View {
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
+                    .foregroundColor(.white)
                 
                 // Ask a question
                 Text("How well do you usually sleep?")
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
+                    .foregroundColor(.white)
                 
                 // Rating scale
                 HStack {
