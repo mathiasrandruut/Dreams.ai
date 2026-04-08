@@ -1,0 +1,17 @@
+# Secrets
+Secrets.swift
+
+# Xcode
+*.xcuserstate
+*.xcuserdatad/
+DerivedData/
+build/
+
+# CocoaPods
+Pods/
+
+# macOS
+.DS_Store
+
+# Firebase (if contains sensitive config)
+# GoogleService-Info.plist
